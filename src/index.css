@@ -1,0 +1,63 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+}
+
+main {
+  padding: 1rem;
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.nav-brand {
+  font-weight: bold;
+  margin-right: auto;
+}
+
+.nav a.active {
+  font-weight: bold;
+}
+
+.landing {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.browse {
+  display: flex;
+  gap: 1rem;
+  height: calc(100vh - 6rem);
+}
+
+.listings {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.map-placeholder {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ccc;
+  color: #333;
+  font-size: 1.5rem;
+}
