@@ -1,0 +1,18 @@
+So far, around 90% of our development has been done with AI.
+    - Almost all the coding has been done using AI, other than a few libararies
+    that we downloaded ourselves.
+    - The design on Figma and the inspiration for this project were also done by us.
+    - The implementation and github pages were also set up by us.
+    - The rest of the coding, excluding this file, have been done by AI
+
+Member contributions:
+    Aditya: (2 hours)
+        - Downloaded libraries and dependencies, set up GitHub pages and deployed 
+        a very minimal, barebones version of the final website. No map API's yet,
+        added placeholders for all the features yet to be added.
+
+    Ameen: (2 hours)
+        -
+
+    Fayzaan: (2 hours)
+        -
