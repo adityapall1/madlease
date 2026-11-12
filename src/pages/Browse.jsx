@@ -32,7 +32,7 @@ function ApartmentList({ onSelect }) {
   )
 }
 
-function ApartmentDetail({ apartment, onBack }) {
+function ApartmentDetail({ apartment, onBack, isSaved, onToggleSave }) {
   const summary = leaseSummary(apartment)
   // Cheapest first, so the range above reads straight down the list. Copied
   // before sorting -- sort() would otherwise reorder the imported data itself.
@@ -63,21 +63,30 @@ function ApartmentDetail({ apartment, onBack }) {
           </li>
         ))}
       </ul>
+      <button type="button" onClick={onToggleSave}> {isSaved ? 'Remove from Saved' : 'Save Apartment'} </button>
     </>
   )
 }
 
-function Browse() {
+function Browse({ savedApartmentIds, setSavedApartmentIds }) {
   // The one piece of state on this page. Both the panel and the map read it, so
   // they cannot disagree about which building is highlighted.
   const [selectedId, setSelectedId] = useState(null)
   const selected = apartments.find((apartment) => apartment.id === selectedId) ?? null
 
+  function toggleSavedApartment(id) {
+    setSavedApartmentIds((prev) =>
+      prev.includes(id)
+        ? prev.filter((savedId) => savedId !== id)
+        : [...prev, id]
+    )
+  }
+
   return (
     <div className="browse">
       <section className="listings">
         {selected ? (
-          <ApartmentDetail apartment={selected} onBack={() => setSelectedId(null)} />
+          <ApartmentDetail apartment={selected} onBack={() => setSelectedId(null)} isSaved={savedApartmentIds.includes(selected.id)} onToggleSave={() => toggleSavedApartment(selected.id)} />
         ) : (
           <ApartmentList onSelect={setSelectedId} />
         )}

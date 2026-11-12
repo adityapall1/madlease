@@ -18,4 +18,9 @@ Member contributions:
         placed at the wrong locations.
 
     Fayzaan: (2 hours)
-        -
+        - I created the profile screen so the user could view their personal info, 
+        saved apartments, and posted subleases. Currently, this is done with useState,
+        so a next step would be to do this with local Storage or to implement a backend.
+        I used shared state in App.jsx so user info and saved apartments can be accessed 
+        across multiple pages. I added the ability to save and remove apartments and to 
+        have these changes reflected in the profile page. 

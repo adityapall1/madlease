@@ -10,7 +10,7 @@ function ProfileSection({ title, children }) {
   )
 }
 
-function Profile({ user, savedApartmentIds = [], postedSubleases = [] }) {
+function Profile({ user, setUser, savedApartmentIds = [], postedSubleases = [], setPostedSubleases }) {
   const savedApartments = apartments.filter((apartment) =>
     savedApartmentIds.includes(apartment.id)
   )
