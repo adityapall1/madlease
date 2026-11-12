@@ -52,12 +52,97 @@ main {
   overflow-y: auto;
 }
 
-.map-placeholder {
+/* Leaflet measures its container when the map mounts, so the container needs a
+   height it can actually resolve. .browse is a flex row with a fixed height,
+   which stretches this column to match it. */
+.map {
   flex: 2;
+  height: 100%;
+}
+
+/* Listings panel: the list of every building, shown until one is picked. */
+
+.hint {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.apartment-list,
+.lease-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.apartment-row {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #ccc;
-  color: #333;
-  font-size: 1.5rem;
+  flex-direction: column;
+  gap: 0.15rem;
+  width: 100%;
+  padding: 0.6rem 0.5rem;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.apartment-row:hover {
+  background: #f4f4f4;
+}
+
+.apartment-row-name {
+  font-weight: bold;
+}
+
+.apartment-row-meta {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+/* Listings panel: one building's subleases, shown once it is selected. */
+
+.back {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: #666;
+  cursor: pointer;
+}
+
+.back:hover {
+  color: #000;
+}
+
+.address {
+  margin-top: -0.75rem;
+  color: #666;
+}
+
+.summary {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.lease-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  margin-bottom: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.lease-rent {
+  margin-left: auto;
+  font-weight: bold;
+}
+
+.lease-term {
+  flex-basis: 100%;
+  color: #666;
+  font-size: 0.875rem;
 }

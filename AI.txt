@@ -12,7 +12,10 @@ Member contributions:
         added placeholders for all the features yet to be added.
 
     Ameen: (2 hours)
-        -
+        - Used the OpenStreetMap dataset to create pins that can be clicked to
+        display price range as well as available leases. As of now they do not
+        use real data. Had to fix how the pins were displayed, as they were being
+        placed at the wrong locations.
 
     Fayzaan: (2 hours)
         -
