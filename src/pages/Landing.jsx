@@ -1,12 +1,10 @@
-import { Link } from 'react-router-dom'
-
+// Placeholder. The real page arrives in a later phase.
 function Landing() {
   return (
-    <section className="landing">
-      <h1>MadLease</h1>
-      <p>Find and post subleases around Madison on an interactive map.</p>
-      <Link to="/browse" className="button">Browse subleases</Link>
-    </section>
+    <div className="page">
+      <h1>Landing</h1>
+      <p className="muted">Coming soon.</p>
+    </div>
   )
 }
 

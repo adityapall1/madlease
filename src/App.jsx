@@ -1,64 +1,36 @@
-
-import { useState } from 'react'
-import { NavLink, Route, Routes } from 'react-router-dom'
-import Landing from './pages/Landing.jsx'
+import { Route, Routes } from 'react-router-dom'
+import Nav from './components/Nav.jsx'
+import ThemeProvider from './context/ThemeProvider.jsx'
 import Browse from './pages/Browse.jsx'
+import Landing from './pages/Landing.jsx'
+import ListingForm from './pages/ListingForm.jsx'
+import NotFound from './pages/NotFound.jsx'
 import Profile from './pages/Profile.jsx'
+import SignIn from './pages/SignIn.jsx'
 
 function App() {
-  const [user, setUser] = useState({
-    name: 'John Smith',
-    email: 'john.smith@example.com',
-    phone: '',
-    preferences: {
-      location: 'Madison, WI',
-      budget: '$800 - $1,200',
-      bedrooms: '1',
-      moveInDate: '',
-    },
-  })
-
-  const [savedApartmentIds, setSavedApartmentIds] = useState([])
-  const [postedSubleases, setPostedSubleases] = useState([])
-
   return (
-    <>
-      <nav className="nav">
-        <span className="nav-brand">MadLease</span>
-        <NavLink to="/" end>Home</NavLink>
-        <NavLink to="/browse">Browse</NavLink>
-        <NavLink to="/profile">Profile</NavLink>
-      </nav>
-
-      <main>
+    <ThemeProvider>
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
+      <Nav />
+      <main id="main">
         <Routes>
           <Route path="/" element={<Landing />} />
-
-          <Route
-            path="/browse"
-            element={
-              <Browse
-                savedApartmentIds={savedApartmentIds}
-                setSavedApartmentIds={setSavedApartmentIds}
-              />
-            }
-          />
-
-          <Route
-            path="/profile"
-            element={
-              <Profile
-                user={user}
-                setUser={setUser}
-                savedApartmentIds={savedApartmentIds}
-                postedSubleases={postedSubleases}
-                setPostedSubleases={setPostedSubleases}
-              />
-            }
-          />
+          <Route path="/signin" element={<SignIn />} />
+          {/* The listing detail is a child of Browse, not its own page, so the
+              map stays mounted while the left panel swaps list for detail. */}
+          <Route path="/browse" element={<Browse />}>
+            <Route path="listings/:id" element={null} />
+          </Route>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/listings/new" element={<ListingForm />} />
+          <Route path="/listings/:id/edit" element={<ListingForm />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-    </>
+    </ThemeProvider>
   )
 }
 

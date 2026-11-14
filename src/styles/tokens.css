@@ -1,0 +1,82 @@
+/* Every colour in the app is one of these tokens, so a theme is just a second
+   set of values. The map overlays read them too, which is why the buildings
+   change colour with the theme without any extra code. */
+
+:root {
+  color-scheme: light;
+
+  --bg: #f4f4f2;
+  --surface: #ffffff;
+  --raised: #ffffff;
+  --text: #18191b;
+  --muted: #5b6068;
+  /* Hairlines between things. Too faint to mark the edge of a control. */
+  --border: #dcdde0;
+  /* Edges of inputs, chips and outline buttons. Dark enough to pass 3:1. */
+  --border-strong: #868b93;
+  --accent: #c5050c;
+  --accent-strong: #9f0409;
+  --on-accent: #ffffff;
+  --accent-soft: #fbeaea;
+  --ring: #18191b;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.06), 0 6px 16px rgb(0 0 0 / 0.07);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.08);
+  --skeleton: #e7e7e4;
+  --overlay: rgb(0 0 0 / 0.45);
+
+  /* Buildings on the map: idle, dimmed (no matches), hovered, selected. */
+  --map-idle-fill: #c5050c;
+  --map-idle-opacity: 0.22;
+  --map-idle-stroke: #c5050c;
+  --map-dim-fill: #7b8088;
+  --map-dim-opacity: 0.16;
+  --map-dim-stroke: #8f949c;
+  --map-hot-fill: #c5050c;
+  --map-hot-opacity: 0.5;
+  --map-hot-stroke: #9f0409;
+  --map-sel-fill: #c5050c;
+  --map-sel-opacity: 0.86;
+  --map-sel-stroke: #6c0306;
+
+  --radius-sm: 8px;
+  --radius: 10px;
+  --radius-lg: 12px;
+  --nav-h: 56px;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #111214;
+  --surface: #18191c;
+  --raised: #202226;
+  --text: #ececea;
+  --muted: #a4a8ae;
+  --border: #2e3035;
+  --border-strong: #6f747c;
+  /* UW red is too dark to read on a dark page, so dark mode uses a lighter red
+     and flips the text on top of it to near-black. */
+  --accent: #ff7b80;
+  --accent-strong: #ff9da1;
+  --on-accent: #1d0506;
+  --accent-soft: #3a1719;
+  --ring: #f2f2f0;
+  /* Shadows barely show on dark surfaces, so dark mode relies on borders. */
+  --shadow: 0 0 0 1px var(--border);
+  --shadow-sm: 0 0 0 1px var(--border);
+  --skeleton: #26282c;
+  --overlay: rgb(0 0 0 / 0.6);
+
+  --map-idle-fill: #ff7b80;
+  --map-idle-opacity: 0.26;
+  --map-idle-stroke: #ff7b80;
+  --map-dim-fill: #7d828a;
+  --map-dim-opacity: 0.2;
+  --map-dim-stroke: #6f747c;
+  --map-hot-fill: #ff7b80;
+  --map-hot-opacity: 0.56;
+  --map-hot-stroke: #ffc2c4;
+  --map-sel-fill: #ff7b80;
+  --map-sel-opacity: 0.9;
+  --map-sel-stroke: #ffffff;
+}
