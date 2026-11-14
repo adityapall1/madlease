@@ -1,13 +1,15 @@
-// Apartment buildings around the UW-Madison campus and downtown.
+// The seed data: 26 real apartment buildings around the UW-Madison campus, each
+// with a few made-up subleases. scripts/make-seed.mjs turns this into
+// supabase/05_seed.sql, and scripts/fetch-osm.mjs uses the coordinates to look
+// up each building's outline.
 //
 // Names, addresses and coordinates come from OpenStreetMap's own building data
 // (queried through the Overpass API), so the markers land on the real buildings.
 // Do not hand-edit the coordinates -- an eyeballed guess is how an earlier
 // version of this file ended up putting The Embassy on top of Memorial Library.
 //
-// The leases are still placeholder data: every price, unit size and date below
-// is made up. Swap the leases out for a real API response later; `apartments` is
-// the only shape the UI depends on.
+// The leases are placeholder data: every price, unit size and date below is
+// made up. They become the demo listings.
 
 export const apartments = [
   {
@@ -300,26 +302,3 @@ export const apartments = [
     ],
   },
 ]
-
-// How many subleases are posted at a building, and the cheapest and most
-// expensive of them. The map popup and the listings panel both call this, so the
-// two can never disagree about a building's numbers.
-export function leaseSummary(apartment) {
-  const rents = apartment.leases.map((lease) => lease.rent)
-  if (rents.length === 0) return { count: 0, min: null, max: null }
-  return { count: rents.length, min: Math.min(...rents), max: Math.max(...rents) }
-}
-
-// "$975 - $3,200", or just "$1,450" when a building has only one price.
-export function formatRange(summary) {
-  if (summary.count === 0) return 'No leases listed'
-  const low = `$${summary.min.toLocaleString()}`
-  if (summary.min === summary.max) return low
-  return `${low} – $${summary.max.toLocaleString()}`
-}
-
-// "Studio", "1 bed / 1 bath", "4 bed / 2 bath"
-export function formatUnit(lease) {
-  const beds = lease.beds === 0 ? 'Studio' : `${lease.beds} bed`
-  return `${beds} / ${lease.baths} bath`
-}
