@@ -1,10 +1,17 @@
 import { MapPin, Plus } from 'lucide-react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import { useAuth } from '../context/auth.js'
 import { signInPath } from '../lib/paths.js'
+import AvatarMenu from './AvatarMenu.jsx'
 import ThemeToggle from './ThemeToggle.jsx'
 
 function Nav() {
   const location = useLocation()
+  const { user, loading } = useAuth()
+
+  // Where "Sign in" should bring someone back to. From the landing or sign-in
+  // page there is nowhere useful to return to, so let sign-in pick.
+  const plain = location.pathname === '/' || location.pathname === '/signin'
 
   return (
     <header className="nav">
@@ -25,9 +32,15 @@ function Nav() {
           <span>Post a sublease</span>
         </Link>
         <ThemeToggle />
-        <Link to={signInPath(location)} className="btn btn-outline btn-sm">
-          Sign in
-        </Link>
+        {/* Nothing is shown until we know, so "Sign in" doesn't flash at
+            someone who is already signed in. */}
+        {loading ? null : user ? (
+          <AvatarMenu />
+        ) : (
+          <Link to={plain ? '/signin' : signInPath(location)} className="btn btn-outline btn-sm">
+            Sign in
+          </Link>
+        )}
       </div>
     </header>
   )
