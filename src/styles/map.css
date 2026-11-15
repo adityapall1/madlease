@@ -1,0 +1,243 @@
+/* The map and everything drawn on it. Colours come from the theme tokens, so
+   nothing in here needs a dark-mode version of its own. */
+
+.map-wrap {
+  position: relative;
+  min-width: 0;
+  height: 100%;
+}
+
+.campus-outlines {
+  fill: var(--muted);
+  fill-opacity: 0.07;
+  stroke: var(--muted);
+  stroke-opacity: 0.16;
+  stroke-width: 0.7;
+}
+
+.campus-streets {
+  fill: none;
+  stroke: var(--muted);
+  stroke-opacity: 0.23;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: none;
+}
+
+.map-tools { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.map-destination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--raised);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  font-size: 12px;
+}
+.map-destination select {
+  max-width: 155px;
+  min-height: 30px;
+  border: 0;
+  background: var(--raised);
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.map.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  font: inherit;
+  /* Leaflet stacks its layers up to z-index 1000. Sealing that inside the map
+     stops them from covering the nav, sheets and dialogs. */
+  isolation: isolate;
+}
+
+/* Dev-only fallback: with no CARTO key the map uses standard OpenStreetMap
+   tiles, which only come in light. Flipping them gives a passable dark map. */
+:root[data-theme='dark'] .map-plain .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9);
+}
+
+/* Buildings. Leaflet writes default colours onto each shape as attributes;
+   CSS wins over those, which is what lets these rules take charge. The state
+   is set by BuildingShape.jsx. */
+
+.bldg {
+  fill: var(--map-idle-fill);
+  fill-opacity: var(--map-idle-opacity);
+  stroke: var(--map-idle-stroke);
+  stroke-width: 1.5;
+  cursor: pointer;
+  transition: fill 0.15s, fill-opacity 0.15s, stroke 0.15s, stroke-width 0.15s;
+}
+
+.bldg[data-state='dimmed'] {
+  fill: var(--map-dim-fill);
+  fill-opacity: var(--map-dim-opacity);
+  stroke: var(--map-dim-stroke);
+  stroke-width: 1;
+}
+
+.bldg[data-state='hovered'] {
+  fill: var(--map-hot-fill);
+  fill-opacity: var(--map-hot-opacity);
+  stroke: var(--map-hot-stroke);
+  stroke-width: 2.5;
+}
+
+.bldg[data-state='selected'] {
+  fill: var(--map-sel-fill);
+  fill-opacity: var(--map-sel-opacity);
+  stroke: var(--map-sel-stroke);
+  stroke-width: 3;
+}
+
+/* Price pills and the landmark flag. Leaflet positions a zero-size anchor at
+   the point; the label inside is then centred on it. */
+
+.pill-anchor {
+  overflow: visible;
+}
+
+.price-pill {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 2px 7px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--raised);
+  color: var(--text);
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.price-pill[data-state='hovered'],
+.price-pill[data-state='selected'] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.landmark-flag {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transform: translate(-6px, -50%);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  /* A halo in the page colour keeps the name readable over streets and labels. */
+  text-shadow:
+    0 0 3px var(--bg),
+    0 0 3px var(--bg),
+    0 0 3px var(--bg);
+}
+
+.landmark-flag i {
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--bg);
+  border-radius: 50%;
+  background: var(--text);
+}
+
+/* Tooltip */
+
+.leaflet-tooltip.map-tip {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 9px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--raised);
+  color: var(--text);
+  font-size: 12.5px;
+  line-height: 1.35;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.2);
+}
+
+.leaflet-tooltip.map-tip span {
+  color: var(--muted);
+}
+
+.leaflet-tooltip-top.map-tip::before {
+  border-top-color: var(--raised);
+}
+
+/* Leaflet's own controls, restyled to match the theme. */
+
+.leaflet-bar,
+.leaflet-touch .leaflet-bar {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.leaflet-bar a,
+.leaflet-bar a:hover {
+  border-bottom-color: var(--border);
+  background: var(--raised);
+  color: var(--text);
+}
+
+.leaflet-bar a.leaflet-disabled {
+  background: var(--raised);
+  color: var(--border-strong);
+}
+
+.leaflet-bar a:first-child {
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.leaflet-bar a:last-child {
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+
+.map-reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 32px;
+  padding: 0 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--raised);
+  color: var(--text);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+
+.map-reset:hover {
+  border-color: var(--border-strong);
+}
+
+.map-reset svg {
+  width: 14px;
+  height: 14px;
+}
+
+.leaflet-container .leaflet-control-attribution {
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.leaflet-container .leaflet-control-attribution a {
+  color: var(--text);
+}
