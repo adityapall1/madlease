@@ -1,23 +1,17 @@
 import { CircleAlert } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
-// Shown instead of the app when the Supabase settings are missing. Without them
-// every page would fail in its own confusing way, so stop here and say why.
+// Browsing remains available while account services are not configured.
 function MissingEnv() {
   return (
-    <main className="page page-narrow">
+    <div className="page page-narrow">
       <div className="empty">
         <CircleAlert aria-hidden="true" />
-        <h1>MadLease isn't set up yet</h1>
-        <p>
-          The site can't reach its database because <code>VITE_SUPABASE_URL</code> and{' '}
-          <code>VITE_SUPABASE_PUBLISHABLE_KEY</code> are not set.
-        </p>
-        <p>
-          Running locally? Copy <code>.env.example</code> to <code>.env.local</code>, fill in both values, and
-          restart <code>npm run dev</code>. The README has the full setup steps.
-        </p>
+        <h1>Accounts are coming soon</h1>
+        <p>Sign-in and posting are not available yet. You can still explore the map and try fictional subleases on Browse.</p>
+        <Link className="btn btn-primary" to="/browse">Explore Browse</Link>
       </div>
-    </main>
+    </div>
   )
 }
 

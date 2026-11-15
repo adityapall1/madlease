@@ -5,6 +5,8 @@ import { useAuth } from '../context/auth.js'
 import * as api from '../lib/api.js'
 import { authMessage } from '../lib/errors.js'
 import { safeNext } from '../lib/paths.js'
+import { hasEnv } from '../lib/supabase.js'
+import MissingEnv from '../components/MissingEnv.jsx'
 
 // Supabase allows one code request per address every 60 seconds.
 const COOLDOWN = 60
@@ -28,6 +30,8 @@ function SignIn() {
     const timer = setTimeout(() => setWait(wait - 1), 1000)
     return () => clearTimeout(timer)
   }, [wait])
+
+  if (!hasEnv) return <MissingEnv />
 
   if (loading) {
     return (

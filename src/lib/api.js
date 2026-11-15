@@ -36,6 +36,7 @@ export async function signOut() {
 // Calls back with the session now, and again whenever it changes (sign in,
 // sign out, token refresh). Returns a function that stops listening.
 export function watchAuth(callback) {
+  if (!supabase) { callback(null); return () => {} }
   const { data } = supabase.auth.onAuthStateChange((_event, session) => callback(session))
   return () => data.subscription.unsubscribe()
 }
@@ -57,6 +58,7 @@ export async function updateProfile(id, fields) {
 // ---------------------------------------------------------------------------
 
 export async function fetchBuildings() {
+  if (!supabase) return []
   return unwrap(await supabase.from('buildings').select('*').order('name'))
 }
 
@@ -64,6 +66,7 @@ export async function fetchBuildings() {
 // taken and expired listings, so the two filters here are what keep those out
 // of browse.
 export async function fetchActiveListings() {
+  if (!supabase) return []
   return unwrap(
     await supabase
       .from('listings')
@@ -77,6 +80,7 @@ export async function fetchActiveListings() {
 // One listing by id, or null. Null covers both "never existed" and "you're
 // not allowed to see it" (taken or expired, and not yours).
 export async function fetchListing(id) {
+  if (!supabase || id.startsWith('local-demo-')) return null
   return unwrap(await supabase.from('listings').select(LISTING).eq('id', id).maybeSingle())
 }
 
