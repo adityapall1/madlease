@@ -42,6 +42,10 @@ jobs:
       # Build the production site into the dist/ folder.
       - name: Build
         run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
+          VITE_CARTO_KEY: ${{ vars.VITE_CARTO_KEY }}
 
       # GitHub Pages shows 404.html for any path it can't find. Making it a copy
       # of index.html lets React Router handle routes like /browse on refresh.

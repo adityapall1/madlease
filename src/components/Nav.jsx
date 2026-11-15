@@ -4,6 +4,7 @@ import { useAuth } from '../context/auth.js'
 import { signInPath } from '../lib/paths.js'
 import AvatarMenu from './AvatarMenu.jsx'
 import ThemeToggle from './ThemeToggle.jsx'
+import { Button } from './ui/button.jsx'
 
 function Nav() {
   const location = useLocation()
@@ -27,19 +28,19 @@ function Nav() {
       </nav>
 
       <div className="nav-right">
-        <Link to="/listings/new" className="btn btn-primary btn-sm nav-post" aria-label="Post a sublease">
+        <Button asChild size="sm"><Link to="/listings/new" className="nav-post" aria-label="Post a sublease">
           <Plus aria-hidden="true" />
           <span>Post a sublease</span>
-        </Link>
+        </Link></Button>
         <ThemeToggle />
         {/* Nothing is shown until we know, so "Sign in" doesn't flash at
             someone who is already signed in. */}
         {loading ? null : user ? (
           <AvatarMenu />
         ) : (
-          <Link to={plain ? '/signin' : signInPath(location)} className="btn btn-outline btn-sm">
+          <Button asChild variant="outline" size="sm"><Link to={plain ? '/signin' : signInPath(location)}>
             Sign in
-          </Link>
+          </Link></Button>
         )}
       </div>
     </header>
