@@ -35,6 +35,7 @@ function ListingCard({ listing, to, walk, hot = false, onHover, badge, actions }
           <p className="listing-rent">
             {price} <span>{basis}</span>
             {badge}
+            {listing.is_demo && <span className="badge">Demo</span>}
           </p>
           <p>{formatUnit(listing)}</p>
           <p className="listing-place">{place}</p>
