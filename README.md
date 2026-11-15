@@ -12,7 +12,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-In PowerShell, use `Copy-Item .env.example .env.local`. Open the `/madlease/` URL printed by Vite. Without the Supabase values the site shows a setup message.
+In PowerShell, use `Copy-Item .env.example .env.local`. Open the `/madlease/` URL printed by Vite. Without Supabase values, public browsing works with an empty real-listing list. On Browse, **Add test subleases** adds 26 clearly labeled fictional listings; **Remove test subleases** removes only those local examples. The choice lasts for the current browser tab (including reloads). No database records are created or deleted. Saving and contacting these examples are disabled. Sign-in and posting remain unavailable until Supabase is configured.
 
 | Variable | Purpose |
 | --- | --- |

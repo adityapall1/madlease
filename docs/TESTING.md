@@ -14,6 +14,8 @@ The temporary server was stopped, clearing its in-memory listings, profiles, sav
 
 ## Deferred backend and deployment checks
 
+Follow-up: the intentional Browse demo toggle was tested without backend configuration. Add created 26 cards; reload retained them; Remove returned the count to zero. Demo generation assertions checked unique local IDs, building references, fictional flags, and future date ranges across a year boundary. Lint and production build passed. This is client-side demo data, not the removed fake authentication server. Real/backend-plus-demo combinations are not integration-tested yet.
+
 No real Supabase project is configured. The historical local fixture was not Postgres, GoTrue, or Supabase Storage, and did not prove database security or actual email delivery. Backend configuration is deferred. After following README setup, verify:
 
 - Actual email-code delivery and verification, both email templates, and server-side rejection of non-wisc addresses.

@@ -1,5 +1,7 @@
 # Architecture decisions
 
+Browse works before Supabase is configured: public reads return empty lists and auth resolves signed out. The demo toggle merges fictional listings into Browse only. Reserved `local-demo-` IDs keep them separate from live rows, and sessionStorage remembers the enabled flag. Removal never mutates live records. These examples cannot be saved or contacted, and their detail IDs never trigger database lookups. Account routes show an availability notice until backend configuration exists.
+
 ## Publishable key and RLS
 
 The browser uses a public Supabase publishable key. This identifies the project, not a trusted user. Row Level Security limits updates/deletes to the owner, hides taken and expired listings from other people, and makes saved rows private. Profiles require an authenticated session. Never ship a service-role key. Public storage URLs can be viewed by anyone who knows the URL; hiding a profile card is not private-image storage.
