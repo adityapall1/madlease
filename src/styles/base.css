@@ -1,0 +1,498 @@
+/* Reset, type, and the small set of shared pieces (buttons, fields, chips,
+   notes) that every page builds on. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 0.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: 1.75rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+p {
+  margin: 0 0 0.75rem;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* One focus style everywhere, only for keyboard users. */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Hidden until a keyboard user tabs to it, then it jumps past the nav. */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 8px;
+  z-index: 2000;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--text);
+  color: var(--bg);
+}
+
+.skip-link:focus {
+  top: 8px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 0.875rem;
+}
+
+/* Page containers for everything that isn't the full-screen browse view. */
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+.page-narrow {
+  max-width: 440px;
+}
+
+.page-form {
+  max-width: 720px;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Buttons */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 40px;
+  padding: 0 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: none;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.btn svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-strong);
+}
+
+.btn-outline {
+  border-color: var(--border-strong);
+  background: var(--surface);
+}
+
+.btn-outline:hover:not(:disabled) {
+  border-color: var(--text);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: var(--border);
+}
+
+.btn-danger {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--surface);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--accent-soft);
+}
+
+.btn-sm {
+  min-height: 34px;
+  padding: 0 0.7rem;
+  font-size: 0.875rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.icon-btn:hover {
+  background: var(--border);
+}
+
+.icon-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+/* Form fields */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  min-height: 40px;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--muted);
+}
+
+.input[aria-invalid='true'],
+.select[aria-invalid='true'],
+.textarea[aria-invalid='true'] {
+  border-color: var(--accent);
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.error-text {
+  color: var(--accent);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.field-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.counter {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.counter.is-over {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Toggle chips (beds, amenities). The pressed state comes from aria-pressed so
+   the look and what a screen reader hears can't drift apart. */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 34px;
+  padding: 0 0.75rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.chip:hover {
+  border-color: var(--text);
+}
+
+.chip[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Read-only tags (amenities on a listing, status). */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.tag svg {
+  width: 14px;
+  height: 14px;
+}
+
+.tag-accent {
+  border-color: transparent;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.tag-muted {
+  color: var(--muted);
+}
+
+/* Inline messages */
+
+.note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 0.9rem;
+}
+
+.note svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+}
+
+.note-error {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Centered message for empty lists, errors, and "not found". */
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 2.5rem 1.25rem;
+  text-align: center;
+}
+
+.empty svg {
+  width: 28px;
+  height: 28px;
+  color: var(--muted);
+}
+
+.empty .btn svg {
+  width: 16px;
+  height: 16px;
+  color: inherit;
+}
+
+.empty p {
+  max-width: 34ch;
+  margin: 0;
+  color: var(--muted);
+}
+
+/* Loading */
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border-strong);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.center-screen {
+  display: grid;
+  place-items: center;
+  min-height: 50vh;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.skeleton {
+  border-radius: var(--radius-sm);
+  background: var(--skeleton);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* Confirm dialog. A native <dialog> traps focus and closes on Escape for free. */
+
+.dialog {
+  width: min(92vw, 400px);
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--raised);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.dialog::backdrop {
+  background: var(--overlay);
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}

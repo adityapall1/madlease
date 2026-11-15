@@ -1,0 +1,23 @@
+/* Keep Tailwind's reset out of the existing map and form styles. */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+@source '../components/ui';
+
+@theme inline {
+  --color-primary: var(--accent);
+  --color-primary-foreground: var(--on-accent);
+  --color-background: var(--surface);
+  --color-card: var(--surface);
+  --color-card-foreground: var(--text);
+  --color-secondary: var(--accent-soft);
+  --color-secondary-foreground: var(--text);
+  --color-input: var(--border-strong);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+}
+[data-slot='button'] { text-decoration: none; border-style: solid; cursor: pointer; font-size: 0.875rem; font-weight: 600; }
+[data-slot='button'][data-variant='default'] { color: var(--on-accent); }
+[data-slot='button'][data-variant='outline'], [data-slot='button'][data-variant='ghost'] { color: var(--text); }
+[data-slot='button']:not(.border) { border-width: 0; }
+[data-slot='card'] { border-style: solid; border-color: var(--border); }
