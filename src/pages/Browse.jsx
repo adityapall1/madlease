@@ -13,6 +13,7 @@ import { formatWalk, leaseSummary, plural, today } from '../lib/format.js'
 import { walkMinutes } from '../lib/geo.js'
 import { useIsMobile } from '../lib/useIsMobile.js'
 import { useLandmark } from '../lib/useLandmark.js'
+import { DEMO_KEY, makeDemoListings, isLocalDemo } from '../lib/demoListings.js'
 
 // Listings on the left, map on the right.
 //
@@ -41,8 +42,24 @@ function Browse() {
   const [landmark, chooseLandmark] = useLandmark()
 
   const [status, setStatus] = useState('loading') // 'loading', 'ready' or 'error'
-  const [listings, setListings] = useState([])
-  const [buildings, setBuildings] = useState([])
+  const [liveListings, setListings] = useState([])
+  const [liveBuildings, setBuildings] = useState([])
+  const [demoEnabled, setDemoEnabled] = useState(() => {
+    try { return sessionStorage.getItem(DEMO_KEY) === '1' } catch { return false }
+  })
+  const demo = useMemo(() => makeDemoListings(), [])
+  const listings = useMemo(() => demoEnabled ? [...liveListings, ...demo.listings] : liveListings, [demoEnabled, liveListings, demo])
+  const buildings = useMemo(() => demoEnabled ? [...liveBuildings, ...demo.buildings] : liveBuildings, [demoEnabled, liveBuildings, demo])
+  function toggleDemo() {
+    const enabled = !demoEnabled
+    setDemoEnabled(enabled)
+    try { if (enabled) sessionStorage.setItem(DEMO_KEY, '1'); else sessionStorage.removeItem(DEMO_KEY) } catch { /* This visit still works without storage. */ }
+    if (!enabled && (isLocalDemo(detailId) || isLocalDemo(filters.building))) {
+      const next = writeFilters({ ...filters, building: isLocalDemo(filters.building) ? '' : filters.building })
+      navigate({ pathname: '/browse', search: next.toString() ? `?${next}` : '' }, { replace: true })
+    }
+    setHovered(null)
+  }
   const [attempt, setAttempt] = useState(0)
 
   const [hovered, setHovered] = useState(null) // { id, from: 'map' or 'list' }
@@ -175,9 +192,9 @@ function Browse() {
   }
 
   let body
-  if (status === 'loading') {
+  if (status === 'loading' && !demoEnabled) {
     body = <CardSkeleton />
-  } else if (status === 'error') {
+  } else if (status === 'error' && !demoEnabled) {
     body = (
       <div className="empty">
         <CircleAlert aria-hidden="true" />
@@ -257,6 +274,12 @@ function Browse() {
           {/* On a phone the list is tucked under the map until the sheet is
               pulled up. `inert` keeps the keyboard out of the hidden part. */}
           <div inert={isMobile && !sheetOpen}>
+            <div className="demo-controls">
+              <button className="btn btn-outline btn-sm" type="button" onClick={toggleDemo}>
+                {demoEnabled ? 'Remove test subleases' : 'Add test subleases'}
+              </button>
+              <span role="status">{demoEnabled ? `${demo.listings.length} fictional listings · this tab only` : 'Try Browse with fictional listings'}</span>
+            </div>
             {picked && (
               <p className="picked">
                 Showing {plural(shown.length, 'listing')} at {picked.name}
@@ -272,7 +295,7 @@ function Browse() {
             )}
 
             <div className="results-head">
-              <p role="status">{status === 'ready' ? plural(shown.length, 'sublease') : ' '}</p>
+              <p role="status">{status === 'ready' || demoEnabled ? plural(shown.length, 'sublease') : ' '}</p>
               <label className="sort">
                 Sort
                 <select className="select" value={filters.sort} onChange={(e) => update({ sort: e.target.value })}>
@@ -313,7 +336,7 @@ function Browse() {
         focus={open?.building_id ?? null}
         landmark={landmark}
         onHover={hoverMap}
-          onLandmark={chooseLandmark}
+        onLandmark={chooseLandmark}
         onSelect={select}
       />
     </div>
