@@ -102,7 +102,26 @@ export async function updateListing(id, fields) {
 // fails afterwards, the worst case is a few stray files nobody can see.
 export async function deleteListing(listing) {
   unwrap(await supabase.from('listings').delete().eq('id', listing.id))
-  await removePhotos(listing.photos)
+  try {
+    await cleanupListingPhotos(listing, true)
+    return { cleanupFailed: false }
+  } catch {
+    return { cleanupFailed: true }
+  }
+}
+
+// Include files from interrupted uploads, which may not be in the row yet.
+export async function cleanupListingPhotos(listing, all = false) {
+  const folder = `${listing.owner_id}/${listing.id}`
+  const paths = []
+  let offset = 0
+  while (true) {
+    const rows = unwrap(await supabase.storage.from('listing-photos').list(folder, { limit: 100, offset, sortBy: { column: 'name', order: 'asc' } }))
+    paths.push(...rows.filter((file) => file.id).map((file) => `${folder}/${file.name}`))
+    if (rows.length < 100) break
+    offset += rows.length
+  }
+  await removePhotos(paths.filter((path) => all || !listing.photos.includes(path)))
 }
 
 // ---------------------------------------------------------------------------
