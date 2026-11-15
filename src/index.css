@@ -1,6 +1,18 @@
 /* Styles are split by area so each file stays small. Tokens come first because
    everything else reads them. */
 @import './styles/tokens.css';
+@import './styles/ui.css';
+@import '@fontsource/lora/latin-400.css';
+@import '@fontsource/lora/latin-500.css';
+@import '@fontsource/lora/latin-400-italic.css';
+@import '@fontsource/dm-sans/latin-400.css';
+@import '@fontsource/dm-sans/latin-500.css';
+@import '@fontsource/dm-sans/latin-600.css';
 @import './styles/base.css';
 @import './styles/nav.css';
 @import './styles/signin.css';
+@import './styles/browse.css';
+@import './styles/map.css';
+@import './styles/detail.css';
+@import './styles/pages.css';
+@import './styles/housing.css';
