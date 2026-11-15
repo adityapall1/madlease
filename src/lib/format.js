@@ -15,10 +15,17 @@ export function formatMoney(amount) {
 
 const BASIS = { per_person: 'per person', whole_unit: 'whole unit' }
 
+// The price and what it covers, as two pieces so a card can style them
+// differently: { price: "$1,150/mo", basis: "per person" }.
+export function rentParts(listing) {
+  return { price: `${formatMoney(listing.rent)}/mo`, basis: BASIS[listing.rent_basis] }
+}
+
 // "$1,150/mo per person" or "$2,300/mo whole unit". The basis is always shown
 // next to the price because the two are easy to mix up.
 export function formatRent(listing) {
-  return `${formatMoney(listing.rent)}/mo ${BASIS[listing.rent_basis]}`
+  const { price, basis } = rentParts(listing)
+  return `${price} ${basis}`
 }
 
 // How many listings are in a set, and the cheapest and most expensive of them.
@@ -84,7 +91,7 @@ export function toISO(date) {
 }
 
 export function today() {
-  return toISO(new Date())
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date())
 }
 
 const shortDate = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' })
