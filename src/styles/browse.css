@@ -40,9 +40,29 @@
   .browse { position: relative; }
   .browse > .map-wrap { grid-column: 1 / -1; grid-row: 1; }
   .browse > .panel { grid-column: 1; grid-row: 1; z-index: 2; margin: 12px 0 12px 12px; border: 1px solid var(--border); border-radius: 18px; box-shadow: 0 8px 28px rgb(0 0 0 / 0.16); }
-  .panel, .panel-layer { background: color-mix(in srgb, var(--bg) 94%, transparent); }
-  .panel { backdrop-filter: blur(12px); }
   .browse > .map-wrap .leaflet-top.leaflet-left { left: 440px; }
+
+  /* One translucent surface: stacking tinted layers makes the glass opaque.
+     Cards and open details keep solid surfaces for comfortable reading. */
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .browse > .panel {
+      background: color-mix(in srgb, var(--bg) 68%, transparent);
+      -webkit-backdrop-filter: blur(9px) saturate(115%);
+      backdrop-filter: blur(9px) saturate(115%);
+      border-color: color-mix(in srgb, var(--text) 18%, transparent);
+      box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.16), inset 1px 0 0 rgb(255 255 255 / 0.05), 0 12px 36px rgb(0 0 0 / 0.2);
+    }
+    .browse .panel-layer:not(.detail-layer) { background: transparent; }
+    .browse .filter-bar {
+      background: color-mix(in srgb, var(--surface) 80%, transparent);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+    }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .browse > .panel, .browse .panel-layer:not(.detail-layer) { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
+    .browse .filter-bar { background: var(--surface); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  }
 }
 
 .panel-layer[data-hidden] {
