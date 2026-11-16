@@ -7,10 +7,14 @@ import { landmarks } from '../data/landmarks.js'
 
 // Moves the view to a box. Glides there normally; jumps straight there for
 // people who have asked their system for less motion.
+const viewPadding = () => window.matchMedia('(min-width: 768px)').matches
+  ? { paddingTopLeft: [464, 40], paddingBottomRight: [40, 40] }
+  : { padding: [40, 40] }
+
 function moveTo(map, bounds, options) {
   const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (still) map.fitBounds(bounds, { ...options, animate: false })
-  else map.flyToBounds(bounds, { ...options, duration: 0.7 })
+  if (still) map.fitBounds(bounds, { ...options, ...viewPadding(), animate: false })
+  else map.flyToBounds(bounds, { ...options, ...viewPadding(), duration: 0.7 })
 }
 
 // Decides where the map is looking: fits every building on first load, flies
@@ -31,8 +35,8 @@ function MapCamera({ buildings, selected, focus, landmark, onLandmark }) {
       // First load. A link that already names a building opens zoomed in on
       // it; otherwise show everything. No animation: nothing was on screen yet.
       const target = find(selected ?? focus)
-      if (target) map.fitBounds(buildingBounds(target), { maxZoom: 18, animate: false })
-      else map.fitBounds(boundsOfAll(buildings), { padding: [40, 40], animate: false })
+      if (target) map.fitBounds(buildingBounds(target), { ...viewPadding(), maxZoom: 18, animate: false })
+      else map.fitBounds(boundsOfAll(buildings), { ...viewPadding(), animate: false })
       seen.ready = true
     } else if (selected && selected !== seen.selected) {
       const target = find(selected)

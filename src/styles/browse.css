@@ -26,6 +26,23 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   background: var(--bg);
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--muted) 38%, transparent) transparent;
+}
+
+.panel-layer::-webkit-scrollbar { width: 8px; }
+.panel-layer::-webkit-scrollbar-track { background: transparent; margin-block: 12px; }
+.panel-layer::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--muted) 38%, transparent); border: 2px solid transparent; background-clip: padding-box; border-radius: 999px; }
+.panel-layer::-webkit-scrollbar-thumb:hover { background-color: var(--muted); }
+.panel-layer::-webkit-scrollbar-button { display: none; }
+
+@media (min-width: 768px) {
+  .browse { position: relative; }
+  .browse > .map-wrap { grid-column: 1 / -1; grid-row: 1; }
+  .browse > .panel { grid-column: 1; grid-row: 1; z-index: 2; margin: 12px 0 12px 12px; border: 1px solid var(--border); border-radius: 18px; box-shadow: 0 8px 28px rgb(0 0 0 / 0.16); }
+  .panel, .panel-layer { background: color-mix(in srgb, var(--bg) 94%, transparent); }
+  .panel { backdrop-filter: blur(12px); }
+  .browse > .map-wrap .leaflet-top.leaflet-left { left: 440px; }
 }
 
 .panel-layer[data-hidden] {

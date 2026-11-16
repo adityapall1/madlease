@@ -1,24 +1,36 @@
-# Production map fix — two commits
+# Building outlines and floating panel — four commits
 
-The blue map came from missing SVG class names: React Leaflet applies pathOptions after a path mounts, but Leaflet only reads className when creating the SVG. Development StrictMode masked this by mounting again. Classes now go directly into creation props. Leaflet CSS also loads globally before the theme, preventing lazy-loaded defaults from overriding map controls. The homepage now renders the campus backdrop even with zero listings. Attribution keeps the OpenStreetMap credit without the colorful Leaflet badge.
+Demo listings now reuse 25 real OSM footprints from the existing SQL snapshot. University Square has no confirmed outline and remains a circle. Refresh the browser snapshot after updating the SQL by running `node scripts/export-demo-footprints.mjs`. No coordinates were drawn by hand and no code was copied from uwcourses.
 
-Verified with a production build served by vite preview: light/dark map colors, labeled demo markers, compact attribution, and the homepage map with zero listings. Lint and build pass. Existing hero scroll animations are unchanged.
+Muted red replaces the warm brown/coral accents in light and dark mode. The desktop results panel floats above the map with rounded corners, a translucent surface, and a narrow transparent-track scrollbar. Camera fitting accounts for the panel. Native scrollbar thumb rounding varies by browser; mobile keeps its bottom sheet. Hero scroll animations are unchanged.
 
-Paste this entire block into PowerShell from the repo root. You are currently on main. It creates two commits and pushes main, which triggers Pages deployment. It stops on any failure. No coauthor trailers are included. None of these commands has been executed by Codex.
+Verified with the production preview: 25 polygon paths and one fallback marker, muted red styling, full-width map behind the panel, and no horizontal overflow at 390px. All exported polygons are closed. Lint, production build, and whitespace checks pass. The existing campus bundle-size warning remains.
+
+Paste this entire block into PowerShell from the repo root. It makes four commits and pushes main to trigger Pages deployment. Nothing has been staged, committed, or pushed by Codex. No coauthor trailers are included.
 
 ```powershell
 & {
   if ((git branch --show-current) -ne 'main') { throw 'Start on main.' }
   if (git diff --cached --name-only) { throw 'Resolve existing staged changes first.' }
 
-  git add -- src/components/CampusMap.jsx src/components/BuildingShape.jsx src/components/BrowseMap.jsx src/components/PinMap.jsx src/components/MapTiles.jsx src/index.css src/styles/map.css
+  git add -- scripts/export-demo-footprints.mjs src/data/demo-footprints.json
   if ($LASTEXITCODE -ne 0) { throw 'Staging failed.' }
-  git commit -m "fix botched map on deployment"
+  git commit -m "export real OSM outlines for local demo buildings instead of circles"
   if ($LASTEXITCODE -ne 0) { throw 'Commit failed.' }
 
-  git add -- src/pages/Landing.jsx docs/COMMIT-PLAN.md
+  git add -- src/lib/demoListings.js
   if ($LASTEXITCODE -ne 0) { throw 'Staging failed.' }
-  git commit -m "show the homepage campus map without active listings"
+  git commit -m "highlight demo building footprints instead of circle markers"
+  if ($LASTEXITCODE -ne 0) { throw 'Commit failed.' }
+
+  git add -- src/styles/tokens.css
+  if ($LASTEXITCODE -ne 0) { throw 'Staging failed.' }
+  git commit -m 'add muted red "badger themed" accents and building highlights'
+  if ($LASTEXITCODE -ne 0) { throw 'Commit failed.' }
+
+  git add -- src/styles/browse.css src/components/MapCamera.jsx docs/COMMIT-PLAN.md
+  if ($LASTEXITCODE -ne 0) { throw 'Staging failed.' }
+  git commit -m "float the results panel and soften its scrollbar for better UX"
   if ($LASTEXITCODE -ne 0) { throw 'Commit failed.' }
 
   git pull --ff-only origin main
@@ -28,4 +40,4 @@ Paste this entire block into PowerShell from the repo root. You are currently on
 }
 ```
 
-After the Deploy to GitHub Pages run succeeds, reload the live page. Backend setup remains deferred; this fixes map rendering, not email sign-in or posting.
+After deployment succeeds in GitHub Actions, reload the site. Previously enabled demo listings automatically use the new outlines.
