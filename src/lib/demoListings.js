@@ -1,4 +1,5 @@
 import { apartments } from '../../scripts/seed-data.mjs'
+import footprints from '../data/demo-footprints.json'
 
 export const DEMO_KEY = 'madlease-browse-demo'
 export const isLocalDemo = (id) => id?.startsWith('local-demo-')
@@ -10,7 +11,7 @@ export function makeDemoListings(now = new Date()) {
   const date = value => `${value.getFullYear()}-${String(value.getMonth() + 1).padStart(2, '0')}-${String(value.getDate()).padStart(2, '0')}`
   const buildings = apartments.map(place => ({
     id: `local-demo-${place.id}`, name: place.name, address: place.address,
-    lat: place.coords[0], lng: place.coords[1], footprint: null,
+    lat: place.coords[0], lng: place.coords[1], footprint: footprints[place.id] ?? null,
   }))
   const listings = buildings.map((building, index) => {
     const unit = apartments[index].leases[0]
