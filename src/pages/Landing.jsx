@@ -1,4 +1,3 @@
-import 'leaflet/dist/leaflet.css'
 import { useEffect, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { CircleMarker, MapContainer, Polygon } from 'react-leaflet'
@@ -13,6 +12,7 @@ import { Button } from '../components/ui/button.jsx'
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card.jsx'
 import Reveal from '../components/Reveal.jsx'
 import { useScrollScene } from '../lib/useScrollScene.js'
+import { landmarks } from '../data/landmarks.js'
 
 export default function Landing() {
   const { user, loading } = useAuth()
@@ -44,12 +44,12 @@ export default function Landing() {
       <Reveal className="hero-map" delay={100}>
       <div className="map-paper">
       <div className="paper-label"><span>THE NEIGHBORHOOD EDIT</span><span>MADISON, WI</span></div>
-      <div className="mini-map card" aria-label="Preview of buildings with active subleases">
-        {data?.buildings.length > 0 ? <div inert>
-          <MapContainer className="map" bounds={boundsOfAll(data.buildings)} boundsOptions={{ padding: [25, 25] }} zoomControl={false} dragging={false} scrollWheelZoom={false} doubleClickZoom={false} touchZoom={false} boxZoom={false} keyboard={false}>
-            <CampusMap />{data.buildings.map((b) => b.footprint ? <Polygon key={b.id} positions={footprintToLatLngs(b.footprint)} pathOptions={{ className: 'bldg' }} interactive={false} /> : <CircleMarker key={b.id} center={[b.lat, b.lng]} radius={7} pathOptions={{ className: 'bldg' }} interactive={false} />)}
+      <div className="mini-map card" aria-label="Campus map and available sublease locations">
+        <div>
+          <MapContainer key={data?.buildings.length ? 'listings' : 'campus'} className="map" center={[landmarks[0].lat, landmarks[0].lng]} zoom={15} bounds={data?.buildings.length ? boundsOfAll(data.buildings) : undefined} boundsOptions={{ padding: [25, 25] }} zoomControl={false} dragging={false} scrollWheelZoom={false} doubleClickZoom={false} touchZoom={false} boxZoom={false} keyboard={false}>
+            <CampusMap />{(data?.buildings ?? []).map((b) => b.footprint ? <Polygon key={b.id} positions={footprintToLatLngs(b.footprint)} className="bldg" interactive={false} /> : <CircleMarker key={b.id} center={[b.lat, b.lng]} radius={7} className="bldg" interactive={false} />)}
           </MapContainer>
-        </div> : <p className="empty">{data ? 'New subleases will appear here.' : 'A place for your next chapter.'}</p>}
+        </div>
         <span className="map-caption">Explore near campus</span>
       </div>
       <p className="map-footnote"><MapPin size={14} aria-hidden="true" /> A little closer to everything.</p>
