@@ -9,12 +9,13 @@ const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">Op
 export default function CampusMap() {
   const map = useMap()
   useEffect(() => {
+    map.attributionControl?.setPrefix(false)
     map.attributionControl?.addAttribution(attribution)
     return () => { map.attributionControl?.removeAttribution(attribution) }
   }, [map])
 
   return <Pane name="campus-backdrop" style={{ zIndex: 200, pointerEvents: 'none' }}>
-    <Polygon positions={outlines} interactive={false} pathOptions={{ className: 'campus-outlines' }} />
-    <Polyline positions={campus.streets} interactive={false} pathOptions={{ className: 'campus-streets' }} />
+    <Polygon positions={outlines} interactive={false} className="campus-outlines" />
+    <Polyline positions={campus.streets} interactive={false} className="campus-streets" />
   </Pane>
 }

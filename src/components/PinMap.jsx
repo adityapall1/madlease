@@ -1,5 +1,4 @@
 import L from 'leaflet'
-import 'leaflet/dist/leaflet.css'
 import { MapContainer, Marker, useMap, useMapEvents } from 'react-leaflet'
 import { landmarks } from '../data/landmarks.js'
 import { madisonBox } from '../data/madison.js'

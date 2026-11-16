@@ -1,4 +1,5 @@
-import { TileLayer } from 'react-leaflet'
+import { useEffect } from 'react'
+import { TileLayer, useMap } from 'react-leaflet'
 import { useTheme } from '../context/theme.js'
 import { cartoKey, hasCarto } from '../lib/carto.js'
 
@@ -12,6 +13,8 @@ const CARTO = `${OSM}, &copy; <a href="https://carto.com/attribution/">CARTO</a>
 // a key): ordinary OpenStreetMap tiles, so local development still works.
 function MapTiles() {
   const { theme } = useTheme()
+  const map = useMap()
+  useEffect(() => { map.attributionControl?.setPrefix(false) }, [map])
 
   if (!hasCarto) {
     return <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" attribution={OSM} maxZoom={19} />

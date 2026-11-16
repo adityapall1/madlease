@@ -1,7 +1,4 @@
 import L from 'leaflet'
-// Without Leaflet's own stylesheet the tiles render as scrambled, misplaced
-// squares. It has to be imported somewhere, and here keeps it next to the map.
-import 'leaflet/dist/leaflet.css'
 import { useMemo, useState } from 'react'
 import { MapContainer, Marker, useMapEvents } from 'react-leaflet'
 import { landmarks } from '../data/landmarks.js'

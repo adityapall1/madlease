@@ -235,9 +235,16 @@
 .leaflet-container .leaflet-control-attribution {
   background: color-mix(in srgb, var(--surface) 85%, transparent);
   color: var(--muted);
-  font-size: 11px;
+  font-size: 10px;
+  line-height: 1.5;
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  border-right: 0;
+  border-bottom: 0;
+  border-radius: 6px 0 0 0;
+  font-family: var(--font-interface);
 }
 
 .leaflet-container .leaflet-control-attribution a {
-  color: var(--text);
+  color: var(--muted);
 }

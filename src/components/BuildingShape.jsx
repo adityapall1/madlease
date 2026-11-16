@@ -4,7 +4,6 @@ import { footprintToLatLngs } from '../lib/geo.js'
 
 // Leaflet only reads className when it first draws a shape, so this never
 // changes. The colours come from CSS (map.css), not from options here.
-const PATH = { className: 'bldg' }
 
 // One building on the map: its real outline when we have one, a dot when we
 // don't. `state` is idle, dimmed, hovered or selected.
@@ -63,7 +62,7 @@ function BuildingShape({ building, state, tip, onHover, onSelect }) {
 
   if (outline) {
     return (
-      <Polygon ref={layer} positions={outline} pathOptions={PATH} eventHandlers={handlers}>
+      <Polygon ref={layer} positions={outline} className="bldg" eventHandlers={handlers}>
         {tooltip}
       </Polygon>
     )
@@ -75,7 +74,7 @@ function BuildingShape({ building, state, tip, onHover, onSelect }) {
       ref={layer}
       center={[building.lat, building.lng]}
       radius={big ? 11 : 8}
-      pathOptions={PATH}
+      className="bldg"
       eventHandlers={handlers}
     >
       {tooltip}
