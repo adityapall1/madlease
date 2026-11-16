@@ -14,10 +14,10 @@
   --border: #ded8ce;
   /* Edges of inputs, chips and outline buttons. Dark enough to pass 3:1. */
   --border-strong: #89867f;
-  --accent: #775239;
-  --accent-strong: #5d3d28;
+  --accent: #93463e;
+  --accent-strong: #74332d;
   --on-accent: #fffdf9;
-  --accent-soft: #eee2d4;
+  --accent-soft: #f1ded9;
   --ring: #292d30;
   --shadow: 0 1px 2px rgb(0 0 0 / 0.06), 0 6px 16px rgb(0 0 0 / 0.07);
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.08);
@@ -25,18 +25,18 @@
   --overlay: rgb(0 0 0 / 0.45);
 
   /* Buildings on the map: idle, dimmed (no matches), hovered, selected. */
-  --map-idle-fill: #775239;
+  --map-idle-fill: #93463e;
   --map-idle-opacity: 0.22;
-  --map-idle-stroke: #775239;
+  --map-idle-stroke: #93463e;
   --map-dim-fill: #7b8088;
   --map-dim-opacity: 0.16;
   --map-dim-stroke: #8f949c;
-  --map-hot-fill: #775239;
+  --map-hot-fill: #93463e;
   --map-hot-opacity: 0.5;
-  --map-hot-stroke: #5d3d28;
-  --map-sel-fill: #775239;
+  --map-hot-stroke: #74332d;
+  --map-sel-fill: #93463e;
   --map-sel-opacity: 0.86;
-  --map-sel-stroke: #47301f;
+  --map-sel-stroke: #592923;
 
   --radius-sm: 8px;
   --radius: 10px;
@@ -54,12 +54,12 @@
   --muted: #b8b6b0;
   --border: #3a3e40;
   --border-strong: #858681;
-  /* The warm accent needs more light on a dark page, so dark mode uses sand
+  /* The warm accent needs more light on a dark page, so dark mode uses a muted coral
      and flips the text on top of it to near-black. */
-  --accent: #e6bd94;
-  --accent-strong: #f3d1ae;
-  --on-accent: #2c2118;
-  --accent-soft: #3c3128;
+  --accent: #dc8f85;
+  --accent-strong: #efb0a7;
+  --on-accent: #301b18;
+  --accent-soft: #402b29;
   --ring: #f2f2f0;
   /* Shadows barely show on dark surfaces, so dark mode relies on borders. */
   --shadow: 0 0 0 1px var(--border);
@@ -67,16 +67,16 @@
   --skeleton: #26282c;
   --overlay: rgb(0 0 0 / 0.6);
 
-  --map-idle-fill: #e6bd94;
+  --map-idle-fill: #dc8f85;
   --map-idle-opacity: 0.26;
-  --map-idle-stroke: #e6bd94;
+  --map-idle-stroke: #dc8f85;
   --map-dim-fill: #7d828a;
   --map-dim-opacity: 0.2;
   --map-dim-stroke: #858681;
-  --map-hot-fill: #e6bd94;
+  --map-hot-fill: #dc8f85;
   --map-hot-opacity: 0.56;
-  --map-hot-stroke: #f7dfc3;
-  --map-sel-fill: #e6bd94;
+  --map-hot-stroke: #f2b8af;
+  --map-sel-fill: #dc8f85;
   --map-sel-opacity: 0.9;
   --map-sel-stroke: #fffdf9;
 }
