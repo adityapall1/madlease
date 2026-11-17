@@ -14,7 +14,7 @@
 .nav-logo {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  flex-shrink: 0;
   margin-right: 0.75rem;
   font-size: 1.1rem;
   font-weight: 700;
@@ -22,10 +22,17 @@
   text-decoration: none;
 }
 
-.nav-logo svg {
-  width: 20px;
-  height: 20px;
-  color: var(--accent);
+.nav-wordmark {
+  display: block;
+  width: 148px;
+  height: 34px;
+  background-color: var(--accent);
+  /* Trim the transparent canvas with the mask viewport, preserving the artwork.
+     The theme token supplies brick red in light mode and coral in dark mode. */
+  mask-image: url('/brand/madlease-wordmark.png');
+  mask-size: 114% auto;
+  mask-position: center;
+  mask-repeat: no-repeat;
 }
 
 .nav-link {
@@ -135,6 +142,11 @@
 
   .nav-logo {
     margin-right: 0.25rem;
+  }
+
+  .nav-wordmark {
+    width: 118px;
+    height: 30px;
   }
 
   /* "Post a sublease" shrinks to just its plus icon so the bar fits a phone. */

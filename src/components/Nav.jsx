@@ -1,4 +1,4 @@
-import { MapPin, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/auth.js'
 import { signInPath } from '../lib/paths.js'
@@ -16,9 +16,8 @@ function Nav() {
 
   return (
     <header className="nav">
-      <Link to="/" className="nav-logo">
-        <MapPin aria-hidden="true" />
-        MadLease
+      <Link to="/" className="nav-logo" aria-label="MadLease home">
+        <span className="nav-wordmark" aria-hidden="true" />
       </Link>
 
       <nav aria-label="Main">

@@ -16,6 +16,8 @@ function ThemeProvider({ children }) {
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
+    const favicon = document.getElementById('site-favicon')
+    if (favicon) favicon.href = `${import.meta.env.BASE_URL}brand/favicon-${theme}.svg`
   }, [theme])
 
   function setPref(next) {

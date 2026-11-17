@@ -7,7 +7,7 @@
       name="description"
       content="MadLease is a map of subleases around the UW–Madison campus, posted by students with a wisc.edu email."
     />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link id="site-favicon" rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>MadLease</title>
     <!-- Sets the theme before anything is drawn. Waiting for React to do this
          would show the light page for a moment on every reload in dark mode. -->
@@ -23,6 +23,7 @@
           theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
         }
         document.documentElement.dataset.theme = theme
+        document.getElementById('site-favicon').href = '%BASE_URL%brand/favicon-' + theme + '.svg'
       })()
     </script>
   </head>
