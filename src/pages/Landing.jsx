@@ -13,6 +13,9 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card.
 import Reveal from '../components/Reveal.jsx'
 import { useScrollScene } from '../lib/useScrollScene.js'
 import { landmarks } from '../data/landmarks.js'
+import SiteFooter from '../components/SiteFooter.jsx'
+import LandingStory from '../components/LandingStory.jsx'
+import { useLandingParallax } from '../lib/useLandingParallax.js'
 
 export default function Landing() {
   const { user, loading } = useAuth()
@@ -20,6 +23,7 @@ export default function Landing() {
   const [failed, setFailed] = useState(false)
   const [attempt, setAttempt] = useState(0)
   const scene = useScrollScene(!loading && !user)
+  const backdrop = useLandingParallax(!loading && !user)
   useEffect(() => {
     if (loading || user) return
     let stale = false
@@ -30,7 +34,7 @@ export default function Landing() {
   }, [user, loading, attempt])
   if (loading) return <div className="center-screen" role="status">Loading…</div>
   if (user) return <Navigate to="/browse" replace />
-  return <div className="page landing">
+  return <div className="page landing" ref={backdrop}>
     <section className="hero-story" ref={scene} aria-label="Find your place near campus">
     <div className="hero">
       <Reveal className="hero-intro">
@@ -59,7 +63,7 @@ export default function Landing() {
       <a className="explore-cue" href="#why-madlease"><span className="scroll-track"><span /></span>Scroll to settle in <ArrowDown size={15} aria-hidden="true" /></a>
     </div>
     </section>
-    <Reveal className="chapter-heading"><p className="eyebrow">A little less searching. A little more living.</p><h2>More than an address.<br /><em>Your next chapter.</em></h2><p>A walk to class. A favorite coffee spot. A place that feels like yours—even for a semester.</p></Reveal>
+    <Reveal className="chapter-heading"><p className="eyebrow">Why use MadLease?</p><h2>More than an address.<br /><em>Your next chapter.</em></h2><p>A walk to class. A favorite coffee spot. A place that feels like yours—even for a semester.</p></Reveal>
     <section id="why-madlease" className="landing-points" aria-label="Why MadLease">
       {[
         { title: 'For Badgers', icon: ShieldCheck, text: 'Sign in with your wisc.edu email to post, save, and contact students.' },
@@ -67,7 +71,8 @@ export default function Landing() {
         { title: 'Free to use', icon: Sparkles, text: 'Browse and post without platform fees. Contact the poster directly.' },
       ].map(({ title, icon: Icon, text }, i) => <Reveal key={title} delay={i * 100}><Card className="feature-card"><CardHeader><div className="feature-top"><span className="feature-number">0{i + 1}</span><Icon size={20} aria-hidden="true" /></div><CardTitle>{title}</CardTitle></CardHeader><CardContent><p>{text}</p></CardContent></Card></Reveal>)}
     </section>
+    <LandingStory />
     <LandingFaq />
-    <footer className="site-footer"><span>MadLease · A UW–Madison CS571 project</span><span>Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></span></footer>
+    <SiteFooter />
   </div>
 }
