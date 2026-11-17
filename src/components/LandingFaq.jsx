@@ -5,7 +5,7 @@ import { Button } from './ui/button.jsx'
 const questions = [
   ['Can I look around before signing in?', 'Absolutely. Browse the map, compare rent, and explore available dates without an account. Sign in with your @wisc.edu email when you want to save a place, post a sublease, or view contact details.'],
   ['Can I find just a room?', 'Yes. Filter for a room or an entire unit, then narrow things down by rent, bedrooms, dates, and amenities. Check whether the listed rent is per person or for the whole unit.'],
-  ['What if my classes aren’t near Bascom?', 'Choose a different campus landmark from the map’s Walk to menu. Walk estimates and closest-first sorting update together. These are distance-based estimates, not turn-by-turn routes.'],
+  ['What if my classes aren’t near Bascom?', 'Choose a different campus landmark from the map’s Walk to menu. Walk estimates and closest-first sorting update together. These are distance-based estimates, not turn-by-turn routes. There is a list of 6 which you can choose from.'],
   ['How do I contact someone about a place?', 'Open a listing and sign in to view the poster’s contact information. You arrange the details directly with them. Sample listings are marked as demos and cannot be contacted.'],
   ['Does MadLease handle the lease or payment?', 'No. MadLease helps students find each other; it does not verify listings, process rent, or approve subleases. Before committing, confirm the details with the poster and check the original lease and landlord’s requirements.'],
 ]
