@@ -6,10 +6,11 @@ So far, around 90% of our development has been done with AI.
     - The rest of the coding, excluding this file, have been done by AI
 
 Member contributions:
-    Aditya: (2 hours)
+    Aditya: (4 hours)
         - Downloaded libraries and dependencies, set up GitHub pages and deployed 
         a very minimal, barebones version of the final website. No map API's yet,
         added placeholders for all the features yet to be added.
+        - Using AI to make the frontend and integrate all the different features
 
     Ameen: (2 hours)
         - Used the OpenStreetMap dataset to create pins that can be clicked to
