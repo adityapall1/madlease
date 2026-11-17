@@ -13,6 +13,7 @@ const Browse = lazy(() => import('./pages/Browse.jsx'))
 const Landing = lazy(() => import('./pages/Landing.jsx'))
 const ListingForm = lazy(() => import('./pages/ListingForm.jsx'))
 const Profile = lazy(() => import('./pages/Profile.jsx'))
+const Information = lazy(() => import('./pages/Information.jsx'))
 
 // Pages that need an account. Signed-out visitors are sent to sign in first.
 const guard = (page) => <RequireAuth>{page}</RequireAuth>
@@ -32,6 +33,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Landing />} />
                 <Route path="/signin" element={<SignIn />} />
+                {['about', 'creators', 'contact', 'privacy', 'terms'].map(kind => <Route key={kind} path={`/${kind}`} element={<Information kind={kind} />} />)}
                 {/* The listing detail is a child of Browse, not its own page, so the
                     map stays mounted while the left panel swaps list for detail. */}
                 <Route path="/browse" element={<Browse />}>
